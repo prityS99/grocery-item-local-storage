@@ -21,7 +21,7 @@ const Sidebar = ({ isOpen = true }: SidebarProps) => {
             className="flex items-center gap-3 p-2 hover:bg-green-100 rounded-md"
           >
             <Home />
-            {isOpen && <span>Home</span>}
+            {isOpen && <span>Products</span>}
           </Link>
         </li>
         <li>

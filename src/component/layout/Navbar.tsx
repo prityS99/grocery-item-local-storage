@@ -5,14 +5,14 @@ import { ShoppingCart } from "lucide-react";
 
 const Navbar = () => {
   return (
-    <nav className="bg-green-600 text-white px-6 py-4 flex justify-between items-center shadow-md">
+    <nav className="bg-indigo-600 text-white px-6 py-4 flex justify-between items-center shadow-md">
       {/* Logo */}
       <Link href="/">
         <h1 className="text-2xl font-bold">GroceryCart</h1>
       </Link>
 
       {/* Search Bar */}
-      <div className="flex items-center flex-1 mx-6 max-w-lg">
+      {/* <div className="flex items-center text-white flex-1 mx-6 max-w-lg">
         <input
           type="text"
           placeholder="Search products..."
@@ -21,7 +21,7 @@ const Navbar = () => {
         <button className="bg-green-700 px-4 py-2 rounded-r-md hover:bg-green-800">
           Search
         </button>
-      </div>
+      </div> */}
 
       {/* Cart */}
       <Link href="/cart" className="relative">

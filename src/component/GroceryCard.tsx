@@ -13,7 +13,7 @@ export const GroceryCard = ({ id, image, name, price, category }: { id: number; 
   const dispatch = useAppDispatch();
   return (
     <div className="border p-4 rounded flex flex-col items-center">
-      <Image src={image} alt={name} width={100} height={100} />
+      <Image src={image} alt={name}  width={100} height={100} />
       <h3 className="mt-2 font-semibold">{name}</h3>
       <p>₹{price}</p>
       <button
