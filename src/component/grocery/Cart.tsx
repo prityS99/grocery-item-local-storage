@@ -1,6 +1,6 @@
 
 import { useAppDispatch } from "../hooks/hook";
-import { removeItem } from "../hooks/redux/slice/cartSlice";
+import { GroceryItem, removeItem } from "../hooks/redux/slice/cartSlice";
 
 interface CartProps {
   cart: GroceryItem[];
