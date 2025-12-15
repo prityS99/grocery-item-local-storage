@@ -1,12 +1,21 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface GroceryItem {
+export interface GroceryItem extends BaseProduct {
   id: number;
   name: string;
   price: number;
   image: string;
   category: string;
   quantity: number;
+}
+
+
+export interface BaseProduct {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+  category: string;
 }
 
 export type HistoryActionType = "ADD" | "REMOVE" | "INCREMENT";
@@ -29,7 +38,7 @@ export const initialState: CartState = {
 //-- ADD -- //
 const addItemReducer = (
   state: CartState,
-  action: PayloadAction<GroceryItem>
+  action: PayloadAction<BaseProduct>
 ) => {
   const existingItem = state.items.find(
     (item) => item.id === action.payload.id
@@ -75,16 +84,37 @@ const removeItemReducer = (
 
 
 //--UNDO --//
+//--UNDO --//
 const undoLastReducer = (state: CartState) => {
   const lastAction = state.history.pop();
   if (!lastAction) return;
 
-  if (lastAction.type === "ADD") {
-    state.items.pop();
-  } else {
-    state.items.push(lastAction.item);
+  const undoItem = lastAction.item;
+  const existingItem = state.items.find(item => item.id === undoItem.id);
+
+  switch (lastAction.type) {
+    case "ADD":
+      // Reverses an ADD: Removes the item that was just added.
+      // Note: We should filter/splice, not just pop, in case another action occurred later.
+      state.items = state.items.filter(item => item.id !== undoItem.id);
+      break;
+
+    case "REMOVE":
+      // Reverses a REMOVE: Adds the removed item back to the cart.
+      state.items.push(undoItem);
+      break;
+
+    case "INCREMENT":
+      // Reverses an INCREMENT: Decreases the quantity of the existing item.
+      if (existingItem && existingItem.quantity > 1) {
+        existingItem.quantity -= 1;
+      }
+      break;
+      
+    default:
+      // Handle any unexpected action types
+      console.warn(`Unknown action type for undo: ${lastAction.type}`);
   }
- 
 };
 
 const setCartFromStorageReducer = (state: CartState, action: PayloadAction<GroceryItem[]>) => {
