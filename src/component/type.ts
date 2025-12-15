@@ -3,6 +3,7 @@ type GroceryItem = {
   name: string;
   price: number;
   category: string;
+  image: string;
 };
 
 type CartAction = {

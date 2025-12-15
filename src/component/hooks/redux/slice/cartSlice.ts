@@ -55,6 +55,13 @@ const undoLastReducer = (state: CartState) => {
   } else {
     state.items.push(lastAction.item);
   }
+ 
+};
+
+const setCartFromStorageReducer = (state: CartState, action: PayloadAction<GroceryItem[]>) => {
+  state.items = action.payload;
+  // optional: clear history when loading from storage
+  state.history = [];
 };
 
 const cartSlice = createSlice({
@@ -64,6 +71,7 @@ const cartSlice = createSlice({
     addItem: addItemReducer,
     removeItem: removeItemReducer,
     undoLast: undoLastReducer,
+    setCartFromStorage: setCartFromStorageReducer
   },
 });
 
@@ -72,6 +80,7 @@ export const {
   addItem,
   removeItem,
   undoLast,
+  setCartFromStorage,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
