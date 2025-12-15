@@ -189,6 +189,19 @@ export default function GroceryCart() {
 //     saveCart(cart);
 //   }, [cart]);
 
+// Load cart from localStorage once on mount
+useEffect(() => {
+  const storedCart = loadCart(); // loadCart should return an array of GroceryItem
+  if (storedCart && storedCart.length) {
+    dispatch(setCartFromStorage(storedCart));
+  }
+}, [dispatch]);
+
+// Save cart to localStorage whenever it changes
+useEffect(() => {
+  if (cart.length) saveCart(cart);
+}, [cart]);
+
 
 
   // Filtered and Sorted Items
