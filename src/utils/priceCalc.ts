@@ -1,3 +1,4 @@
+import { GroceryItem } from "@/component/hooks/redux/slice/cartSlice";
 
 
 export const calculateSubtotal = (items: GroceryItem[]) =>

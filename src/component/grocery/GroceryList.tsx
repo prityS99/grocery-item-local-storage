@@ -1,5 +1,5 @@
 import { useAppDispatch } from "../hooks/hook";
-import { addItem } from "../hooks/redux/slice/cartSlice";
+import { addItem, GroceryItem } from "../hooks/redux/slice/cartSlice";
 
 
 interface GroceryListProps {

@@ -1,27 +1,52 @@
 import Image from "next/image";
-import { useAppDispatch } from "./hooks/hook";
-import { addItem } from "./hooks/redux/slice/cartSlice";
 
-interface Props {
+export interface CartItem {
   id: number;
   image: string;
   name: string;
   price: number;
+  category: string;
+  quantity: number;
 }
 
-export const GroceryCard = ({ id, image, name, price, category }: { id: number; image: string; name: string; price: number; category: string }) => {
-  const dispatch = useAppDispatch();
+interface GroceryCardProps {
+  id: number;
+  image: string;
+  name: string;
+  price: number;
+  category: string;
+}
+
+
+const GroceryCard = ({
+  id,
+  image,
+  name,
+  price,
+  category,
+}: GroceryCardProps) => {
   return (
-    <div className="border p-4 rounded flex flex-col items-center">
-      <Image src={image} alt={name}  width={100} height={100} />
-      <h3 className="mt-2 font-semibold">{name}</h3>
-      <p>₹{price}</p>
-      <button
-        className="bg-green-600 text-white px-3 py-1 mt-2 rounded"
-        onClick={() => dispatch(addItem({ id, name, price, category, image }))}
-      >
-        Add
-      </button>
+    <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col items-center p-6 border border-gray-100">
+      <div className="relative w-full h-50 mb-4">
+        <Image
+          src={image}
+          alt={name}
+          fill
+          className="object-contain rounded-t-lg"
+        />
+      </div>
+
+      <h3 className="text-lg font-bold text-gray-800 text-center">
+        {name}
+      </h3>
+      <p className="text-sm text-indigo-600 font-semibold mt-1">
+        ₹{price}
+      </p>
+      <p className="text-xs text-gray-500 mt-0.5">
+        {category}
+      </p>
     </div>
   );
 };
+
+export default GroceryCard;

@@ -1,9 +1,24 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+export interface GroceryItem {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+  category: string;
+  quantity: number;
+}
+
+export type HistoryActionType = "ADD" | "REMOVE" | "INCREMENT";
+
+export interface CartHistory {
+  type: HistoryActionType;
+  item: GroceryItem;
+}
 
 export interface CartState {
   items: GroceryItem[];
-  history: CartAction[];
+  history: CartHistory[];
 }
 
 export const initialState: CartState = {
@@ -16,13 +31,27 @@ const addItemReducer = (
   state: CartState,
   action: PayloadAction<GroceryItem>
 ) => {
-  state.items.push(action.payload);
+  const existingItem = state.items.find(
+    (item) => item.id === action.payload.id
+  );
 
-  state.history.push({
-    type: "ADD",
-    item: action.payload,
-  });
+  if (existingItem) {
+    existingItem.quantity += 1;
+
+    state.history.push({
+      type: "INCREMENT",
+      item: { ...existingItem },
+    });
+  } else {
+    state.items.push({ ...action.payload, quantity: 1 });
+
+    state.history.push({
+      type: "ADD",
+      item: { ...action.payload, quantity: 1 },
+    });
+  }
 };
+
 
 //-- REMOVE -- //
 const removeItemReducer = (
